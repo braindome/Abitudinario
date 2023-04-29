@@ -18,6 +18,13 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Button(action: {
+                    trackerVM.testCalculateCurrentStreak()
+                    
+                }) {
+                    Text("test")
+                    
+                }
                 HStack {
                     Button(action: {
                         selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
@@ -61,6 +68,7 @@ struct ContentView: View {
                                                                 NewActivityView(selectedDate: $selectedDate)){
                                             Image(systemName: "plus")
                 })
+
         }
     }
 }
@@ -70,6 +78,12 @@ struct HabitTrackerRowView: View {
     @Binding var selectedDate : Date
     var habit: Habit
     let vm : HabitTrackerViewModel
+    
+    private var isHabitCompleted: Bool {
+        //return habit.completedDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: selectedDate) })
+        //return habit.completedDates.contains { Calendar.current.isDate($0, inSameDayAs: selectedDate) }
+        return vm.isHabitCompletedOnDate(habit: habit, date: selectedDate)
+    }
 
     var body: some View {
         HStack {
@@ -78,7 +92,7 @@ struct HabitTrackerRowView: View {
             Button(action: {
                 vm.toggle(habit: habit, latestDone: selectedDate)
             }) {
-                if habit.isCompleted {
+                if isHabitCompleted {
                     Image(systemName: "checkmark.square")
                 } else {
                     Image(systemName: "square")
