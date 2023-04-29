@@ -52,7 +52,7 @@ struct NewActivityView : View {
              }
          }
         .fullScreenCover(isPresented: $isSaved, content: {
-            ContentView()
+            ContentView(statsVM: HabitStatsViewModel())
         })
     }
 }

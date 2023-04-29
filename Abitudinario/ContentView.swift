@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @State var selectedDate = Date()
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
+    let statsVM : HabitStatsViewModel
     let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
 
@@ -18,13 +19,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Button(action: {
-                    trackerVM.testCalculateCurrentStreak()
-                    
-                }) {
-                    Text("test")
-                    
-                }
                 HStack {
                     Button(action: {
                         selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
@@ -48,7 +42,7 @@ struct ContentView: View {
                 }
                 List {
                     ForEach(trackerVM.habits/*.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: selectedDate) }*/) { habit in
-                        HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM)
+                        HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM, statsVM: statsVM)
                     }
                     .onDelete() { indexSet in
                         for index in indexSet {
@@ -76,18 +70,27 @@ struct ContentView: View {
 
 struct HabitTrackerRowView: View {
     @Binding var selectedDate : Date
+    @State var isPresentingSheet = false
     var habit: Habit
     let vm : HabitTrackerViewModel
+    let statsVM : HabitStatsViewModel
     
     private var isHabitCompleted: Bool {
-        //return habit.completedDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: selectedDate) })
-        //return habit.completedDates.contains { Calendar.current.isDate($0, inSameDayAs: selectedDate) }
         return vm.isHabitCompletedOnDate(habit: habit, date: selectedDate)
     }
 
     var body: some View {
+
         HStack {
-            Text(habit.name)
+            Button(action: {
+                isPresentingSheet = true
+            }) {
+                Image(systemName: "info.square")
+            }
+            .sheet(isPresented: $isPresentingSheet) {
+                HabitStatsView(habit: habit)
+            }
+            Text(habit.name).disabled(true)
             Spacer()
             Button(action: {
                 vm.toggle(habit: habit, latestDone: selectedDate)
@@ -98,13 +101,16 @@ struct HabitTrackerRowView: View {
                     Image(systemName: "square")
                 }
             }
+            .buttonStyle(PlainButtonStyle())
         }
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let trackerVM = HabitTrackerViewModel()
-        ContentView().environmentObject(trackerVM)
+        let statsVM = HabitStatsViewModel()
+        ContentView(statsVM: statsVM).environmentObject(trackerVM)
     }
 }

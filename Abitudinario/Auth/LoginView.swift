@@ -62,7 +62,7 @@ struct LoginView : View {
             .padding()
         }
         .fullScreenCover(isPresented: $signedIn, content: {
-            ContentView()
+            ContentView(statsVM: HabitStatsViewModel())
         })
     }
 }
@@ -106,7 +106,7 @@ struct CreateUserView: View {
             }
         }
        .fullScreenCover(isPresented: $signedIn, content: {
-           ContentView() // Navigate to HabitTrackerView after successful user creation
+           ContentView(statsVM: HabitStatsViewModel())
        })
        
     }

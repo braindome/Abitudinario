@@ -27,6 +27,8 @@
 		A9F9569429FC79D8003ED6C6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569329FC79D8003ED6C6 /* Habit.swift */; };
 		A9F9569629FC7A50003ED6C6 /* NewActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */; };
 		A9F9569829FC9480003ED6C6 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569729FC9480003ED6C6 /* Day.swift */; };
+		A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */; };
+		A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		A9F9569329FC79D8003ED6C6 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewActivityView.swift; sourceTree = "<group>"; };
 		A9F9569729FC9480003ED6C6 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsView.swift; sourceTree = "<group>"; };
+		A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,7 @@
 				A9F9565429FC72AE003ED6C6 /* Assets.xcassets */,
 				A9F9565629FC72AE003ED6C6 /* Preview Content */,
 				A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */,
+				A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */,
 			);
 			path = Abitudinario;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				A9F9568E29FC76C1003ED6C6 /* HabitTrackerViewModel.swift */,
+				A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -337,6 +343,8 @@
 				A9F9568A29FC7579003ED6C6 /* LoginVM.swift in Sources */,
 				A9F9565329FC72AD003ED6C6 /* ContentView.swift in Sources */,
 				A9F9569229FC7829003ED6C6 /* TextFieldStyleAuth.swift in Sources */,
+				A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */,
+				A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */,
 				A9F9565129FC72AD003ED6C6 /* AbitudinarioApp.swift in Sources */,
 				A9F9569629FC7A50003ED6C6 /* NewActivityView.swift in Sources */,
 				A9F9568C29FC75AB003ED6C6 /* LoginView.swift in Sources */,
