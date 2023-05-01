@@ -24,14 +24,16 @@ struct AbitudinarioApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var loginVM = LoginVM(email: "", password: "", name: "")
     @StateObject var trackerVM: HabitTrackerViewModel // New version
+    @StateObject var statsVM: HabitStatsViewModel
 
     init() {
         _trackerVM = StateObject(wrappedValue: HabitTrackerViewModel())
+        _statsVM = StateObject(wrappedValue: HabitStatsViewModel())
     }
 
     var body: some Scene {
         WindowGroup {
-            LoginView(loginVM: loginVM).environmentObject(trackerVM)
+            LoginView(loginVM: loginVM).environmentObject(trackerVM).environmentObject(statsVM)
 
         }
     }

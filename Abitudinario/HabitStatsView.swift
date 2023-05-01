@@ -10,34 +10,37 @@ import SwiftUI
 
 struct HabitStatsView: View {
     @State var habit : Habit
-    //var statsVM : HabitStatsViewModel
+    @EnvironmentObject var statsVM : HabitStatsViewModel
+    @EnvironmentObject var trackerVM : HabitTrackerViewModel
+    @State var isPresented = false
     
     var body: some View {
         let statsVM = HabitStatsViewModel()
-        VStack {
-            Button(action: {
-                if let docId = habit.docId {
-                    statsVM.getStatsFromFirestore(docId: docId)
+        NavigationView {
+            VStack {
+                Button(action: {
+                    if let docId = habit.docId {
+                        statsVM.getStatsFromFirestore(docId: docId)
+                    }
+                }) {
+                    Text("Get")
                 }
-            }) {
-                Text("Get")
-            }
-            List {
-                ForEach(statsVM.formattedDates) { date in
-                    Text(date)
+                List {
+                    ForEach(trackerVM.habits) { habit in
+                        
+                    }
                 }
+
+                Text("\(habit.name)")
+
             }
-
-            Text("\(habit.name)")
-
-        }
-        .onAppear() {
-            if let docId = habit.docId {
-                print("Reading stats for \(habit.name)")
-                statsVM.getStatsFromFirestore(docId: docId)
+            .onAppear() {
+                trackerVM.listenToFirebase()
             }
         }
-        
+        .fullScreenCover(isPresented: $isPresented, content: {
+            ContentView()
+        })
     }
 }
 
@@ -49,7 +52,6 @@ extension String: Identifiable {
 
 struct HabitStatsView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = HabitStatsViewModel()
         HabitStatsView(habit: Habit(name: "Preview habit", description: "Just a preview"))
     }
 }

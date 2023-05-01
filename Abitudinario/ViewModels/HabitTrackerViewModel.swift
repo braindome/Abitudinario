@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Firebase
+import UIKit
 
 class HabitTrackerViewModel : ObservableObject {
     
@@ -199,7 +200,8 @@ class HabitTrackerViewModel : ObservableObject {
         }
     }
     
-
+    
+    // ----------------- REMINDERS ---------------------
 
 
 }

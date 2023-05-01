@@ -11,7 +11,8 @@ struct ContentView: View {
     
     @State var selectedDate = Date()
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
-    let statsVM : HabitStatsViewModel
+    @EnvironmentObject var statsVM : HabitStatsViewModel
+    @State var testAlert = false
     let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
 
@@ -71,6 +72,8 @@ struct ContentView: View {
 struct HabitTrackerRowView: View {
     @Binding var selectedDate : Date
     @State var isPresentingSheet = false
+    @State var showingStreakAlert = false
+    @State var streakMessage = ""
     var habit: Habit
     let vm : HabitTrackerViewModel
     let statsVM : HabitStatsViewModel
@@ -94,6 +97,14 @@ struct HabitTrackerRowView: View {
             Spacer()
             Button(action: {
                 vm.toggle(habit: habit, latestDone: selectedDate)
+                //showingStreakAlert = true
+                if habit.currentStreak  > 1 {
+                    showingStreakAlert = true
+                    streakMessage = "You're on a \(habit.currentStreak)-day streak!"
+                } else if habit.currentStreak == 0 {
+                    showingStreakAlert = true
+                    streakMessage = "Streak broken"
+                }
             }) {
                 if isHabitCompleted {
                     Image(systemName: "checkmark.square")
@@ -102,6 +113,9 @@ struct HabitTrackerRowView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
+            .alert(isPresented: $showingStreakAlert) {
+                Alert(title: Text("Streak!"), message: Text(streakMessage), dismissButton: .default(Text("OK")))
+            }
         }
         
     }
@@ -111,6 +125,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let trackerVM = HabitTrackerViewModel()
         let statsVM = HabitStatsViewModel()
-        ContentView(statsVM: statsVM).environmentObject(trackerVM)
+        ContentView().environmentObject(trackerVM).environmentObject(statsVM)
     }
 }
