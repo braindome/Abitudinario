@@ -106,7 +106,7 @@ struct CreateUserView: View {
             }
         }
        .fullScreenCover(isPresented: $signedIn, content: {
-           ContentView() // Navigate to HabitTrackerView after successful user creation
+           ContentView()
        })
        
     }

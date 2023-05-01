@@ -14,6 +14,7 @@ struct NewActivityView : View {
     @State var activityName = ""
     @State var description = ""
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
+    @EnvironmentObject var statsVM : HabitStatsViewModel
     @Binding var selectedDate : Date
         
     var body: some View {
