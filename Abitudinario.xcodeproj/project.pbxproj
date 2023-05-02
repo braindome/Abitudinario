@@ -29,6 +29,8 @@
 		A9F9569829FC9480003ED6C6 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569729FC9480003ED6C6 /* Day.swift */; };
 		A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */; };
 		A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */; };
+		A9F9569E29FFFEF9003ED6C6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */; };
+		A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		A9F9569729FC9480003ED6C6 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsView.swift; sourceTree = "<group>"; };
 		A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsViewModel.swift; sourceTree = "<group>"; };
+		A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 				A9F9565629FC72AE003ED6C6 /* Preview Content */,
 				A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */,
 				A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */,
+				A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */,
+				A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */,
 			);
 			path = Abitudinario;
 			sourceTree = "<group>";
@@ -341,11 +347,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F9568A29FC7579003ED6C6 /* LoginVM.swift in Sources */,
+				A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */,
 				A9F9565329FC72AD003ED6C6 /* ContentView.swift in Sources */,
 				A9F9569229FC7829003ED6C6 /* TextFieldStyleAuth.swift in Sources */,
 				A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */,
 				A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */,
 				A9F9565129FC72AD003ED6C6 /* AbitudinarioApp.swift in Sources */,
+				A9F9569E29FFFEF9003ED6C6 /* NotificationManager.swift in Sources */,
 				A9F9569629FC7A50003ED6C6 /* NewActivityView.swift in Sources */,
 				A9F9568C29FC75AB003ED6C6 /* LoginView.swift in Sources */,
 				A9F9568F29FC76C1003ED6C6 /* HabitTrackerViewModel.swift in Sources */,

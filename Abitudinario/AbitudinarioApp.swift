@@ -25,15 +25,20 @@ struct AbitudinarioApp: App {
     @StateObject var loginVM = LoginVM(email: "", password: "", name: "")
     @StateObject var trackerVM: HabitTrackerViewModel // New version
     @StateObject var statsVM: HabitStatsViewModel
+    @StateObject var notificationManager : NotificationManager
 
     init() {
         _trackerVM = StateObject(wrappedValue: HabitTrackerViewModel())
         _statsVM = StateObject(wrappedValue: HabitStatsViewModel())
+        _notificationManager = StateObject(wrappedValue: NotificationManager())
     }
 
     var body: some Scene {
         WindowGroup {
-            LoginView(loginVM: loginVM).environmentObject(trackerVM).environmentObject(statsVM)
+            LoginView(loginVM: loginVM)
+                .environmentObject(trackerVM)
+                .environmentObject(statsVM)
+                .environmentObject(notificationManager)
 
         }
     }

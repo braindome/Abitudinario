@@ -17,6 +17,7 @@ struct Habit : Codable, Identifiable {
     var currentStreak : Int = 0
     var latestDone : Date?
     var completedDates : [Date] = []
+    var dailyReminder : Date?
     var id : String {
         return docId ?? UUID().uuidString
     }

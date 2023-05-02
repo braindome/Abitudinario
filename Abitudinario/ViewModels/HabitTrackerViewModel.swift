@@ -20,10 +20,10 @@ class HabitTrackerViewModel : ObservableObject {
     let auth = Auth.auth()
     
     
-    func addHabitToFirestore(habitName: String, habitDesc: String, date: Date) {
+    func addHabitToFirestore(habitName: String, habitDesc: String, date: Date, dailyReminder: Date) {
         guard let user = auth.currentUser else {return}
         let habitsRef = db.collection("Users").document(user.uid).collection("Habits")
-        let habit = Habit(name: habitName, description: habitDesc, date: date, completedDates: [])
+        let habit = Habit(name: habitName, description: habitDesc, date: date, completedDates: [], dailyReminder: dailyReminder)
         
         do {
             print("Adding habit \(habitName) to firebase")
@@ -87,7 +87,8 @@ class HabitTrackerViewModel : ObservableObject {
                 name: habit.name,
                 description: habit.description,
                 date: habit.date,
-                completedDates: updatedCompletedDates
+                completedDates: updatedCompletedDates,
+                dailyReminder: habit.dailyReminder
             )
 
             do {
@@ -199,9 +200,4 @@ class HabitTrackerViewModel : ObservableObject {
             return Calendar.current.isDate(completedDate, inSameDayAs: date)
         }
     }
-    
-    
-    // ----------------- REMINDERS ---------------------
-
-
 }
