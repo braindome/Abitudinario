@@ -26,8 +26,8 @@ struct HabitStatsView: View {
                     Text("Get")
                 }
                 List {
-                    ForEach(trackerVM.habits) { habit in
-                        
+                    ForEach(habit.completedDates, id: \.self) { date in
+                        Text("\(date, formatter: DateFormatter.customFormat)")
                     }
                 }
 
