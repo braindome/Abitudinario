@@ -65,6 +65,7 @@ struct ContentView: View {
                 HStack {
                     Button(action: {
                         selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
+                        print("Date in view: \(selectedDate)")
                     }) {
                         Image(systemName: "chevron.left")
                             .padding(.trailing, 8)
@@ -78,13 +79,14 @@ struct ContentView: View {
                         .datePickerStyle(.compact)
                     Button(action: {
                         selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
+                        print("Date in view: \(selectedDate)")
                     }) {
                         Image(systemName: "chevron.right")
                             .padding(.leading, 8)
                     }
                 }
                 List {
-                    ForEach(trackerVM.habits/*.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: selectedDate) }*/) { habit in
+                    ForEach(trackerVM.habits) { habit in
                         HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM, statsVM: statsVM)
                     }
                     .onDelete() { indexSet in
@@ -96,6 +98,7 @@ struct ContentView: View {
 
             }
             .onAppear() {
+                selectedDate = selectedDate.withDefaultTimeZone()
                 print("\(selectedDate)")
                 trackerVM.listenToFirebase()
                 notificationManager.reloadAuthorizationStatus()
@@ -136,6 +139,7 @@ struct HabitTrackerRowView: View {
     @State var isPresentingSheet = false
     @State var showingStreakAlert = false
     @State var streakMessage = ""
+    @State var streak: Int?
     var habit: Habit
     let vm : HabitTrackerViewModel
     let statsVM : HabitStatsViewModel
@@ -158,13 +162,19 @@ struct HabitTrackerRowView: View {
             Text(habit.name).disabled(true)
             Spacer()
             Button(action: {
+                vm.getStreak(habit: habit) { streak in
+                    if let streak = streak {                     // Asynchronously get streak from db. With the closure, it is possible
+                        //print("Current streak: \(streak)")     // to capture the result of the method and update the UI. Closure = completion handler
+                        self.streak = streak
+                        if habit.currentStreak >= 1 {
+                            showingStreakAlert = true
+                            streakMessage = "You're on a \(streak)-day streak!"
+                        }
+                    } else {
+                        print("error getting streak")
+                    }
+                }
                 vm.toggle(habit: habit, latestDone: selectedDate)
-                if habit.currentStreak  > 1 {
-                    showingStreakAlert = true
-                    streakMessage = "You're on a \(habit.currentStreak)-day streak!"
-                } /*else {
-                    showingStreakAlert = false
-                }*/
             }) {
                 if isHabitCompleted {
                     Image(systemName: "checkmark.square")
@@ -178,6 +188,15 @@ struct HabitTrackerRowView: View {
             }
         }
         
+    }
+}
+
+
+// Bugfix: UI DatePicker date showing a day after the logged date
+extension Date {
+    func withDefaultTimeZone() -> Date {
+        let timeZoneOffset = TimeZone.current.secondsFromGMT()
+        return Date(timeInterval: TimeInterval(timeZoneOffset), since: self)
     }
 }
 

@@ -51,7 +51,6 @@ class HabitTrackerViewModel : ObservableObject {
                         let habit = try document.data(as: Habit.self)
                         self.habits.append(habit)
                     } catch {
-                        //print("listenToFirebase - Error reading from db")
                         print("Error decoding habit: \(error.localizedDescription)")
                     }
                 }
@@ -74,6 +73,8 @@ class HabitTrackerViewModel : ObservableObject {
         let habitsRef = db.collection("Users").document(user.uid).collection("Habits")
         let isHabitCompleted = isHabitCompletedOnDate(habit: habit, date: latestDone)
         
+        
+        
         var updatedCompletedDates = habit.completedDates
         if isHabitCompleted {
             updatedCompletedDates.removeAll { Calendar.current.isDate($0, inSameDayAs: latestDone) }
@@ -81,13 +82,14 @@ class HabitTrackerViewModel : ObservableObject {
             updatedCompletedDates.append(latestDone)
         }
         
-
+        let streak = calculateCurrentStreak(from: updatedCompletedDates)
 
         if let docId = habit.docId {
             let updatedHabit = Habit(
                 name: habit.name,
                 description: habit.description,
                 date: habit.date,
+                currentStreak: streak,
                 completedDates: updatedCompletedDates,
                 dailyReminder: habit.dailyReminder
             )
@@ -98,28 +100,11 @@ class HabitTrackerViewModel : ObservableObject {
                 print("Error updating habit: \(error.localizedDescription)")
             }
         }
-        
-        let streak = calculateCurrentStreak(from: updatedCompletedDates)
-        print("Current streak: \(streak)")
-        
-        if let docId = habit.docId {
-            let newData = ["currentStreak": streak]
-            let docRef = habitsRef.document(docId)
-            docRef.setData(newData, merge: true) { error in
-                if let error = error {
-                    print("Error updating habit with streak: \(error)")
-                } else {
-                    print("Successfully updated habit with streak")
-                }
-            }
-        }
-
-
     }
     
     
-    
     // ----------------- STREAK ---------------------
+    
     func testCalculateCurrentStreak() {
         let habitViewModel = HabitTrackerViewModel()
 
@@ -178,13 +163,6 @@ class HabitTrackerViewModel : ObservableObject {
                 let currentDate = sortedDates[i]
                 let components = Calendar.current.dateComponents([.day], from: previousDate, to: currentDate)
                 
-                /*if let days = components.day, days == 1 {
-                    // The previous date is one day before the current date, so increase the streak count
-                    currentStreak += 1
-                } else if let days = components.day, days > 1 {
-                    // There is a gap in the streak, so reset the streak count
-                    currentStreak = 1
-                }*/
                 
                 if let days = components.day {
                     if days == 1 {
@@ -202,51 +180,36 @@ class HabitTrackerViewModel : ObservableObject {
         if let lastDate = sortedDates.last, Calendar.current.isDateInToday(lastDate) {
             currentStreak += 1
         }
-        
-        // if let lastDate = sortedDates.last {
-        //    if Calendar.current.isDateInToday(lastDate) {
-                // If the last completed date is today, then the streak continues
-        //        currentStreak += 1
-        //    }
-        //}
+
 
         return currentStreak
     }
     
-    // OLD MODEL
-    /*func calculateCurrentStreak(from completedDates: [Date]) -> Int {
-        var currentStreak = 0
+    func getStreak(habit: Habit, completion: @escaping (Int?) -> Void) {
+        guard let user = auth.currentUser else {
+            completion(nil)
+            return
+        }
+        guard let docId = habit.docId else {
+            completion(nil)
+            return
+        }
+        let habitsRef = db.collection("Users").document(user.uid).collection("Habits")
 
-        // Sort the completed dates in ascending order
-        let sortedDates = completedDates.sorted()
-
-        // Start with the most recent completed date and check if the previous date is one day before
-        for i in (0..<sortedDates.count).reversed() {
-            // Skip future dates
-            if Calendar.current.compare(sortedDates[i], to: Date(), toGranularity: .day) == .orderedDescending {
-                continue
-            }
-
-            if i == sortedDates.count - 1 || Calendar.current.compare(sortedDates[i + 1], to: Date(), toGranularity: .day) == .orderedDescending {
-                // The most recent completed date is today, or the next date is in the future, so the streak is at least 1
-                currentStreak = 1
-            } else {
-                let previousDate = sortedDates[i]
-                let currentDate = sortedDates[i + 1]
-                let components = Calendar.current.dateComponents([.day], from: previousDate, to: currentDate)
-                if let days = components.day, days == 1 {
-                    // The previous date is one day before the current date, so increase the streak count
-                    currentStreak += 1
+        habitsRef.document(docId).getDocument { (documentSnapshot, error) in
+            if let error = error {
+                print("Error getting streak data from habit: \(error)")
+                completion(nil)
+            } else if let documentSnapshot = documentSnapshot {
+                if let streak = documentSnapshot.get("currentStreak") as? Int {
+                    completion(streak)
                 } else {
-                    // The streak is broken, so exit the loop
-                    break
+                    print("Field 'currentStreak' does not exist in document")
+                    completion(nil)
                 }
             }
         }
-
-        return currentStreak
-    }*/
-    
+    }
     
     func isHabitCompletedOnDate(habit: Habit, date: Date) -> Bool {
         return habit.completedDates.contains { completedDate in
