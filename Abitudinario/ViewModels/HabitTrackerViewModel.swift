@@ -272,4 +272,28 @@ class HabitTrackerViewModel : ObservableObject {
         
         return doneInMonth
     }
+    
+    func filterByWeekNumber(habit: Habit, week: Int) -> [String] {
+        var doneInWeek: [String] = []
+        
+        let filteredDates = habit.completedDates.filter { date in
+            let weekNumber = Calendar.current.component(.weekOfYear, from: date)
+            return weekNumber == week
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        for date in filteredDates {
+            doneInWeek.append(formatter.string(from: date))
+        }
+        
+        print("\(habit.name) done \(doneInWeek) times in week \(week)")
+        return doneInWeek
+    }
+    
+    func filterByDay(habit: Habit, date: Date) -> [Date] {
+        let filteredDates = habit.completedDates.filter { Calendar.current.isDate($0, inSameDayAs: date) }
+        return filteredDates
+    }
+    
 }
