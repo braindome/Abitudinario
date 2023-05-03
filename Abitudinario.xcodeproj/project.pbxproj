@@ -31,6 +31,7 @@
 		A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */; };
 		A9F9569E29FFFEF9003ED6C6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */; };
 		A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */; };
+		A9F956E02A01A8E0003ED6C6 /* HabitSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsViewModel.swift; sourceTree = "<group>"; };
 		A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
+		A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitSummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */,
 				A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */,
 				A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */,
+				A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */,
 			);
 			path = Abitudinario;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9F956E02A01A8E0003ED6C6 /* HabitSummaryView.swift in Sources */,
 				A9F9568A29FC7579003ED6C6 /* LoginVM.swift in Sources */,
 				A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */,
 				A9F9565329FC72AD003ED6C6 /* ContentView.swift in Sources */,

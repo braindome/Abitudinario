@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Habit : Codable, Identifiable {
+struct Habit : Codable, Identifiable, Hashable {
     @DocumentID var docId : String?
     var name : String
     var description : String

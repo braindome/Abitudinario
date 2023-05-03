@@ -118,9 +118,12 @@ struct ContentView: View {
             
                 .padding()
                 .navigationTitle("Activity List")
-                .navigationBarItems(trailing: NavigationLink(destination:
-                                                                NewActivityView(selectedDate: $selectedDate)){
-                                            Image(systemName: "plus")
+                .navigationBarItems(
+                    leading: NavigationLink(destination: HabitSummaryView()) {
+                    Image(systemName: "info.square")
+                },
+                    trailing: NavigationLink(destination: NewActivityView(selectedDate: $selectedDate)) {
+                    Image(systemName: "plus")
                 })
 
         }
@@ -147,7 +150,7 @@ struct HabitTrackerRowView: View {
             Button(action: {
                 isPresentingSheet = true
             }) {
-                Image(systemName: "info.square")
+                Text("")
             }
             .sheet(isPresented: $isPresentingSheet) {
                 HabitStatsView(habit: habit)
@@ -156,14 +159,12 @@ struct HabitTrackerRowView: View {
             Spacer()
             Button(action: {
                 vm.toggle(habit: habit, latestDone: selectedDate)
-                //showingStreakAlert = true
                 if habit.currentStreak  > 1 {
                     showingStreakAlert = true
                     streakMessage = "You're on a \(habit.currentStreak)-day streak!"
-                } else if habit.currentStreak == 0 {
-                    showingStreakAlert = true
-                    streakMessage = "Streak broken"
-                }
+                } /*else {
+                    showingStreakAlert = false
+                }*/
             }) {
                 if isHabitCompleted {
                     Image(systemName: "checkmark.square")

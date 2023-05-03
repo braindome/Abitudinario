@@ -20,6 +20,7 @@ class HabitTrackerViewModel : ObservableObject {
     let auth = Auth.auth()
     
     
+    
     func addHabitToFirestore(habitName: String, habitDesc: String, date: Date, dailyReminder: Date) {
         guard let user = auth.currentUser else {return}
         let habitsRef = db.collection("Users").document(user.uid).collection("Habits")
@@ -167,6 +168,58 @@ class HabitTrackerViewModel : ObservableObject {
         // Sort the completed dates in ascending order
         let sortedDates = completedDates.sorted()
 
+        // Check for gaps in the streak
+        for i in 0..<sortedDates.count {
+            if i == 0 {
+                // The streak starts from the first completed date
+                currentStreak = 1
+            } else {
+                let previousDate = sortedDates[i - 1]
+                let currentDate = sortedDates[i]
+                let components = Calendar.current.dateComponents([.day], from: previousDate, to: currentDate)
+                
+                /*if let days = components.day, days == 1 {
+                    // The previous date is one day before the current date, so increase the streak count
+                    currentStreak += 1
+                } else if let days = components.day, days > 1 {
+                    // There is a gap in the streak, so reset the streak count
+                    currentStreak = 1
+                }*/
+                
+                if let days = components.day {
+                    if days == 1 {
+                        print("If days between streaks = 1")
+                        currentStreak += 1
+                    } else if days > 1 {
+                        print("If days between streaks > 1")
+                        currentStreak = 1
+                    }
+                }
+            }
+        }
+
+        // Check if the streak extends to today
+        if let lastDate = sortedDates.last, Calendar.current.isDateInToday(lastDate) {
+            currentStreak += 1
+        }
+        
+        // if let lastDate = sortedDates.last {
+        //    if Calendar.current.isDateInToday(lastDate) {
+                // If the last completed date is today, then the streak continues
+        //        currentStreak += 1
+        //    }
+        //}
+
+        return currentStreak
+    }
+    
+    // OLD MODEL
+    /*func calculateCurrentStreak(from completedDates: [Date]) -> Int {
+        var currentStreak = 0
+
+        // Sort the completed dates in ascending order
+        let sortedDates = completedDates.sorted()
+
         // Start with the most recent completed date and check if the previous date is one day before
         for i in (0..<sortedDates.count).reversed() {
             // Skip future dates
@@ -192,12 +245,31 @@ class HabitTrackerViewModel : ObservableObject {
         }
 
         return currentStreak
-    }
+    }*/
     
     
     func isHabitCompletedOnDate(habit: Habit, date: Date) -> Bool {
         return habit.completedDates.contains { completedDate in
             return Calendar.current.isDate(completedDate, inSameDayAs: date)
         }
+    }
+    
+    // ----------------- STATS ---------------------
+    
+    func filterByMonth(habit: Habit, month: Int) -> [String] {
+        var doneInMonth: [String] = []
+        
+        let filteredDates = habit.completedDates.filter { date in
+            let monthNumber = Calendar.current.component(.month, from: date)
+            return monthNumber == month
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        for date in filteredDates {
+            doneInMonth.append(formatter.string(from: date))
+        }
+        
+        return doneInMonth
     }
 }
