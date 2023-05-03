@@ -14,8 +14,8 @@
             filePath = "Abitudinario/ViewModels/HabitTrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "filterByWeekNumber(habit:week:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -23,11 +23,6 @@ struct HabitStatsView: View {
         NavigationView {
             VStack {
                 Text("Stats for \(habit.name)")
-                /*List {
-                    ForEach(habit.completedDates, id: \.self) { date in
-                        Text("\(date, formatter: DateFormatter.customFormat)")
-                    }
-                }*/
                 HStack {
                     Text("View by:")
                     Picker("Date Interval", selection: $selectedInterval) {
