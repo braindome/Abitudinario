@@ -24,12 +24,10 @@ struct AbitudinarioApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var loginVM = LoginVM(email: "", password: "", name: "")
     @StateObject var trackerVM: HabitTrackerViewModel // New version
-    @StateObject var statsVM: HabitStatsViewModel
     @StateObject var notificationManager : NotificationManager
 
     init() {
         _trackerVM = StateObject(wrappedValue: HabitTrackerViewModel())
-        _statsVM = StateObject(wrappedValue: HabitStatsViewModel())
         _notificationManager = StateObject(wrappedValue: NotificationManager())
     }
 
@@ -37,9 +35,7 @@ struct AbitudinarioApp: App {
         WindowGroup {
             LoginView(loginVM: loginVM)
                 .environmentObject(trackerVM)
-                .environmentObject(statsVM)
                 .environmentObject(notificationManager)
-
         }
     }
 }

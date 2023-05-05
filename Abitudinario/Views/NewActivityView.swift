@@ -14,7 +14,6 @@ struct NewActivityView : View {
     @State var activityName = ""
     @State var description = ""
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
-    @EnvironmentObject var statsVM : HabitStatsViewModel
     @EnvironmentObject var notificationManager : NotificationManager
     @Binding var selectedDate : Date
     @State var isPickerActive = false

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9C08D1F2A043050004F1FBE /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = A9C08D1E2A043050004F1FBE /* SwiftUIX */; };
+		A9C08D232A043818004F1FBE /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9C08D222A043818004F1FBE /* Colors.xcassets */; };
+		A9C08D262A043AAB004F1FBE /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C08D252A043AAB004F1FBE /* Color+Extensions.swift */; };
+		A9C08D282A043EA6004F1FBE /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C08D272A043EA6004F1FBE /* ButtonStyles.swift */; };
 		A9F9565129FC72AD003ED6C6 /* AbitudinarioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9565029FC72AD003ED6C6 /* AbitudinarioApp.swift */; };
 		A9F9565329FC72AD003ED6C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9565229FC72AD003ED6C6 /* ContentView.swift */; };
 		A9F9565529FC72AE003ED6C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9F9565429FC72AE003ED6C6 /* Assets.xcassets */; };
@@ -26,9 +30,7 @@
 		A9F9569229FC7829003ED6C6 /* TextFieldStyleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569129FC7829003ED6C6 /* TextFieldStyleAuth.swift */; };
 		A9F9569429FC79D8003ED6C6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569329FC79D8003ED6C6 /* Habit.swift */; };
 		A9F9569629FC7A50003ED6C6 /* NewActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */; };
-		A9F9569829FC9480003ED6C6 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569729FC9480003ED6C6 /* Day.swift */; };
 		A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */; };
-		A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */; };
 		A9F9569E29FFFEF9003ED6C6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */; };
 		A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */; };
 		A9F956E02A01A8E0003ED6C6 /* HabitSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */; };
@@ -52,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A9C08D222A043818004F1FBE /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Abitudinario/Colors.xcassets; sourceTree = SOURCE_ROOT; };
+		A9C08D252A043AAB004F1FBE /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		A9C08D272A043EA6004F1FBE /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		A9F9564D29FC72AD003ED6C6 /* Abitudinario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Abitudinario.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9F9565029FC72AD003ED6C6 /* AbitudinarioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbitudinarioApp.swift; sourceTree = "<group>"; };
 		A9F9565229FC72AD003ED6C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,9 +75,7 @@
 		A9F9569129FC7829003ED6C6 /* TextFieldStyleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyleAuth.swift; sourceTree = "<group>"; };
 		A9F9569329FC79D8003ED6C6 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewActivityView.swift; sourceTree = "<group>"; };
-		A9F9569729FC9480003ED6C6 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsView.swift; sourceTree = "<group>"; };
-		A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatsViewModel.swift; sourceTree = "<group>"; };
 		A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
 		A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitSummaryView.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 				A9F9568029FC73D7003ED6C6 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				A9F9567C29FC73D7003ED6C6 /* FirebaseAuth in Frameworks */,
 				A9F9567E29FC73D7003ED6C6 /* FirebaseFirestore in Frameworks */,
+				A9C08D1F2A043050004F1FBE /* SwiftUIX in Frameworks */,
 				A9F9568229FC73D7003ED6C6 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +111,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9C08D1C2A0426FC004F1FBE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */,
+				A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */,
+				A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */,
+				A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A9C08D242A043A9C004F1FBE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9C08D252A043AAB004F1FBE /* Color+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A9F9564429FC72AD003ED6C6 = {
 			isa = PBXGroup;
 			children = (
@@ -130,19 +153,18 @@
 		A9F9564F29FC72AD003ED6C6 /* Abitudinario */ = {
 			isa = PBXGroup;
 			children = (
+				A9C08D242A043A9C004F1FBE /* Extensions */,
 				A9F9569029FC780B003ED6C6 /* Styles */,
 				A9F9568D29FC7697003ED6C6 /* ViewModels */,
 				A9F9568429FC73F3003ED6C6 /* Models */,
 				A9F9568329FC73E2003ED6C6 /* Auth */,
+				A9C08D1C2A0426FC004F1FBE /* Views */,
+				A9F9565429FC72AE003ED6C6 /* Assets.xcassets */,
+				A9C08D222A043818004F1FBE /* Colors.xcassets */,
+				A9F9565629FC72AE003ED6C6 /* Preview Content */,
+				A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */,
 				A9F9565029FC72AD003ED6C6 /* AbitudinarioApp.swift */,
 				A9F9565229FC72AD003ED6C6 /* ContentView.swift */,
-				A9F9565429FC72AE003ED6C6 /* Assets.xcassets */,
-				A9F9565629FC72AE003ED6C6 /* Preview Content */,
-				A9F9569529FC7A50003ED6C6 /* NewActivityView.swift */,
-				A9F9569929FDC5CB003ED6C6 /* HabitStatsView.swift */,
-				A9F9569D29FFFEF9003ED6C6 /* NotificationManager.swift */,
-				A9F956DD2A0027AA003ED6C6 /* InfoOverlayView.swift */,
-				A9F956DF2A01A8E0003ED6C6 /* HabitSummaryView.swift */,
 			);
 			path = Abitudinario;
 			sourceTree = "<group>";
@@ -187,7 +209,6 @@
 			children = (
 				A9F9568529FC7403003ED6C6 /* User.swift */,
 				A9F9569329FC79D8003ED6C6 /* Habit.swift */,
-				A9F9569729FC9480003ED6C6 /* Day.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -196,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				A9F9568E29FC76C1003ED6C6 /* HabitTrackerViewModel.swift */,
-				A9F9569B29FDC86B003ED6C6 /* HabitStatsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -205,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				A9F9569129FC7829003ED6C6 /* TextFieldStyleAuth.swift */,
+				A9C08D272A043EA6004F1FBE /* ButtonStyles.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -231,6 +252,7 @@
 				A9F9567D29FC73D7003ED6C6 /* FirebaseFirestore */,
 				A9F9567F29FC73D7003ED6C6 /* FirebaseFirestoreCombine-Community */,
 				A9F9568129FC73D7003ED6C6 /* FirebaseFirestoreSwift */,
+				A9C08D1E2A043050004F1FBE /* SwiftUIX */,
 			);
 			productName = Abitudinario;
 			productReference = A9F9564D29FC72AD003ED6C6 /* Abitudinario.app */;
@@ -306,6 +328,7 @@
 			mainGroup = A9F9564429FC72AD003ED6C6;
 			packageReferences = (
 				A9F9567A29FC73D7003ED6C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A9C08D1D2A043050004F1FBE /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = A9F9564E29FC72AD003ED6C6 /* Products */;
 			projectDirPath = "";
@@ -324,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F9565829FC72AE003ED6C6 /* Preview Assets.xcassets in Resources */,
+				A9C08D232A043818004F1FBE /* Colors.xcassets in Resources */,
 				A9F9565529FC72AE003ED6C6 /* Assets.xcassets in Resources */,
 				A9F9568829FC748F003ED6C6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -375,15 +399,15 @@
 				A9F956DE2A0027AA003ED6C6 /* InfoOverlayView.swift in Sources */,
 				A9F9565329FC72AD003ED6C6 /* ContentView.swift in Sources */,
 				A9F9569229FC7829003ED6C6 /* TextFieldStyleAuth.swift in Sources */,
-				A9F9569C29FDC86B003ED6C6 /* HabitStatsViewModel.swift in Sources */,
 				A9F9569A29FDC5CB003ED6C6 /* HabitStatsView.swift in Sources */,
 				A9F9565129FC72AD003ED6C6 /* AbitudinarioApp.swift in Sources */,
 				A9F9569E29FFFEF9003ED6C6 /* NotificationManager.swift in Sources */,
 				A9F9569629FC7A50003ED6C6 /* NewActivityView.swift in Sources */,
+				A9C08D262A043AAB004F1FBE /* Color+Extensions.swift in Sources */,
 				A9F9568C29FC75AB003ED6C6 /* LoginView.swift in Sources */,
 				A9F9568F29FC76C1003ED6C6 /* HabitTrackerViewModel.swift in Sources */,
 				A9F9569429FC79D8003ED6C6 /* Habit.swift in Sources */,
-				A9F9569829FC9480003ED6C6 /* Day.swift in Sources */,
+				A9C08D282A043EA6004F1FBE /* ButtonStyles.swift in Sources */,
 				A9F9568629FC7403003ED6C6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -705,6 +729,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A9C08D1D2A043050004F1FBE /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		A9F9567A29FC73D7003ED6C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -716,6 +748,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A9C08D1E2A043050004F1FBE /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9C08D1D2A043050004F1FBE /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
 		A9F9567B29FC73D7003ED6C6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A9F9567A29FC73D7003ED6C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

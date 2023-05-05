@@ -14,7 +14,6 @@ enum DateInterval {
 
 struct HabitStatsView: View {
     @State var habit : Habit
-    @EnvironmentObject var statsVM : HabitStatsViewModel
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
     @State var isPresented = false
     @State var selectedInterval: DateInterval = .day

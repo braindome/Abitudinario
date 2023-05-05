@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct ContentView: View {
     
     @State var selectedDate = Date()
     @EnvironmentObject var trackerVM : HabitTrackerViewModel
-    @EnvironmentObject var statsVM : HabitStatsViewModel
     @EnvironmentObject var notificationManager : NotificationManager
     @State private var isCreatePresented = false
 
@@ -60,75 +60,82 @@ struct ContentView: View {
 
     
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Button(action: {
-                        selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
-                        print("Date in view: \(selectedDate)")
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .padding(.trailing, 8)
-                    }
-                    DatePicker("Select a date", selection: $selectedDate, displayedComponents: [.date])
-                        .padding()
-                        .onChange(of: selectedDate, perform: { date in
-                            print("Date in view: \(date)")
+        ZStack {
+            NavigationView {
+                ZStack {
+                    VStack {
+                        ZStack {
+                            HStack {
+                                Button(action: {
+                                    selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
+                                    print("Date in view: \(selectedDate)")
+                                }) {
+                                    Image(systemName: "chevron.left")
+                                        .padding(.trailing, 8)
+                                        .foregroundColor(.black)
+                                }
+                                DatePicker("Select a date", selection: $selectedDate, displayedComponents: [.date])
+                                    .padding()
+                                    .onChange(of: selectedDate, perform: { date in
+                                        print("Date in view: \(date)")
 
-                        })
-                        .datePickerStyle(.compact)
-                    Button(action: {
-                        selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
-                        print("Date in view: \(selectedDate)")
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .padding(.leading, 8)
-                    }
-                }
-                List {
-                    ForEach(trackerVM.habits) { habit in
-                        HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM, statsVM: statsVM)
-                    }
-                    .onDelete() { indexSet in
-                        for index in indexSet {
-                            trackerVM.delete(index: index)
+                                    })
+                                    .datePickerStyle(.compact)
+                                Button(action: {
+                                    selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
+                                    print("Date in view: \(selectedDate)")
+                                }) {
+                                    Image(systemName: "chevron.right")
+                                        .padding(.leading, 8)
+                                        .foregroundColor(.black)
+                                }
+                            }
+                        }
+                        ZStack {
+                            List {
+                                ForEach(trackerVM.habits) { habit in
+                                    HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM)
+                                }
+                                .onDelete() { indexSet in
+                                    for index in indexSet {
+                                        trackerVM.delete(index: index)
+                                    }
+                                }
+                            }
                         }
                     }
+                    .onAppear() {
+                        selectedDate = selectedDate.withDefaultTimeZone()
+                        print("\(selectedDate)")
+                        trackerVM.listenToFirebase()
+                        notificationManager.reloadAuthorizationStatus()
+                    }
+                    .onChange(of: notificationManager.authorizationStatus) { authorizationStatus in
+                        switch authorizationStatus {
+                        case .notDetermined:
+                            notificationManager.requestAuthorization()
+                        case .authorized:
+                            notificationManager.reloadLocalNotifications()
+                        default:
+                        break
+                        }
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        notificationManager.reloadLocalNotifications()
+                    }
+                    .padding()
+                    .navigationTitle("Activity List")
+                    .navigationBarItems(
+                        leading: NavigationLink(destination: HabitSummaryView()) {
+                        Image(systemName: "info.square")
+                                .foregroundColor(.black)
+                    },
+                        trailing: NavigationLink(destination: NewActivityView(selectedDate: $selectedDate)) {
+                        Image(systemName: "plus")
+                                .foregroundColor(.black)
+                    })
                 }
-
             }
-            .onAppear() {
-                selectedDate = selectedDate.withDefaultTimeZone()
-                print("\(selectedDate)")
-                trackerVM.listenToFirebase()
-                notificationManager.reloadAuthorizationStatus()
-            }
-            .onChange(of: notificationManager.authorizationStatus) { authorizationStatus in
-                switch authorizationStatus {
-                case .notDetermined:
-                    notificationManager.requestAuthorization()
-                case .authorized:
-                    notificationManager.reloadLocalNotifications()
-                default:
-                break
-                    
-                }
-                
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                notificationManager.reloadLocalNotifications()
-            }
-            
-                .padding()
-                .navigationTitle("Activity List")
-                .navigationBarItems(
-                    leading: NavigationLink(destination: HabitSummaryView()) {
-                    Image(systemName: "info.square")
-                },
-                    trailing: NavigationLink(destination: NewActivityView(selectedDate: $selectedDate)) {
-                    Image(systemName: "plus")
-                })
-
         }
     }
 }
@@ -142,7 +149,6 @@ struct HabitTrackerRowView: View {
     @State var streak: Int?
     var habit: Habit
     let vm : HabitTrackerViewModel
-    let statsVM : HabitStatsViewModel
     
     private var isHabitCompleted: Bool {
         return vm.isHabitCompletedOnDate(habit: habit, date: selectedDate)
@@ -150,41 +156,45 @@ struct HabitTrackerRowView: View {
 
     var body: some View {
 
-        HStack {
-            Button(action: {
-                isPresentingSheet = true
-            }) {
-                Text("")
-            }
-            .sheet(isPresented: $isPresentingSheet) {
-                HabitStatsView(habit: habit)
-            }
-            Text(habit.name).disabled(true)
-            Spacer()
-            Button(action: {
-                vm.getStreak(habit: habit) { streak in
-                    if let streak = streak {                     // Asynchronously get streak from db. With the closure, it is possible
-                        //print("Current streak: \(streak)")     // to capture the result of the method and update the UI. Closure = completion handler
-                        self.streak = streak
-                        if habit.currentStreak >= 1 {
-                            showingStreakAlert = true
-                            streakMessage = "You're on a \(streak)-day streak!"
+        ZStack {
+
+            HStack {
+                Button(action: {
+                    isPresentingSheet = true
+                }) {
+                    Text("")
+                }
+                .sheet(isPresented: $isPresentingSheet) {
+                    HabitStatsView(habit: habit)
+                }
+                Text(habit.name).disabled(true)
+                Spacer()
+                Button(action: {
+                    vm.getStreak(habit: habit) { streak in
+                        // Asynchronously get streak from db. With the closure, it is possible
+                        // to capture the result of the method and update the UI. Closure = completion handler
+                        if let streak = streak {
+                            self.streak = streak
+                            if habit.currentStreak >= 1 {
+                                showingStreakAlert = true
+                                streakMessage = "You're on a \(streak)-day streak!"
+                            }
+                        } else {
+                            print("error getting streak")
                         }
+                    }
+                    vm.toggle(habit: habit, latestDone: selectedDate)
+                }) {
+                    if isHabitCompleted {
+                        Image(systemName: "checkmark.square")
                     } else {
-                        print("error getting streak")
+                        Image(systemName: "square")
                     }
                 }
-                vm.toggle(habit: habit, latestDone: selectedDate)
-            }) {
-                if isHabitCompleted {
-                    Image(systemName: "checkmark.square")
-                } else {
-                    Image(systemName: "square")
+                .buttonStyle(PlainButtonStyle())
+                .alert(isPresented: $showingStreakAlert) {
+                    Alert(title: Text("Streak!"), message: Text(streakMessage), dismissButton: .default(Text("OK")))
                 }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .alert(isPresented: $showingStreakAlert) {
-                Alert(title: Text("Streak!"), message: Text(streakMessage), dismissButton: .default(Text("OK")))
             }
         }
         
@@ -203,7 +213,7 @@ extension Date {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let trackerVM = HabitTrackerViewModel()
-        let statsVM = HabitStatsViewModel()
-        ContentView().environmentObject(trackerVM).environmentObject(statsVM)
+        let notifm = NotificationManager()
+        ContentView().environmentObject(trackerVM).environmentObject(notifm)
     }
 }

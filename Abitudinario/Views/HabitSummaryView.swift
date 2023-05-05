@@ -50,20 +50,23 @@ struct HabitSummaryView: View {
                 
                 switch selectedInterval {
                 case .day:
-                    List {
-                        ForEach(trackerVM.habits, id: \.self) { habit in
-                            let completedDates = trackerVM.filterByDay(habit: habit, date: viewOption)
-                            if completedDates.count > 0 {
-                                Text("\(habit.name) done this day")
+                        List {
+                            ForEach(trackerVM.habits, id: \.self) { habit in
+                                let completedDates = trackerVM.filterByDay(habit: habit, date: viewOption)
+                                if completedDates.count > 0 {
+                                    Text("\(habit.name) done this day")
+                                }
                             }
                         }
-                    }
                 case .week:
-                    List {
-                        ForEach(trackerVM.habits, id: \.self) { habit in
-                            let completedDates = trackerVM.filterByWeekNumber(habit: habit, week: selectedWeek)
-                            Text("\(habit.name) completed \(completedDates.count) days this week")
+                   Group {
+                        List {
+                            ForEach(trackerVM.habits, id: \.self) { habit in
+                                let completedDates = trackerVM.filterByWeekNumber(habit: habit, week: selectedWeek)
+                                Text("\(habit.name) completed \(completedDates.count) days this week")
+                            }
                         }
+                       Spacer()
                     }
                 case .month:
                     List {
@@ -88,6 +91,7 @@ struct WeekPicker: View {
     @Binding var selectedWeek : Int
     
     var body: some View {
+
         VStack {
             Text("Selected Week \(selectedWeek)")
             Picker("Week", selection: $selectedWeek) {
@@ -97,6 +101,7 @@ struct WeekPicker: View {
             }
             .pickerStyle(SegmentedPickerStyle())
         }
+
     }
 }
 
@@ -111,27 +116,32 @@ struct MonthYearPicker: View {
     @State private var selectedYear = 0
     
     var body: some View {
+
         VStack {
-            HStack {
-                Picker(selection: $selectedMonth, label: Text("Month")) {
-                    ForEach(0..<dateFormatter.monthSymbols.count) { index in
-                        Text(dateFormatter.monthSymbols[index]).tag(index)
+            ZStack { 
+                HStack {
+                    Picker(selection: $selectedMonth, label: Text("Month")) {
+                        ForEach(0..<dateFormatter.monthSymbols.count) { index in
+                            Text(dateFormatter.monthSymbols[index]).tag(index)
+                        }
+                    }
+                    
+                    Picker(selection: $selectedYear, label: Text("Year")) {
+                        ForEach(0..<years.count) { index in
+                            Text(String(years[index])).tag(index)
+                        }
                     }
                 }
-                
-                Picker(selection: $selectedYear, label: Text("Year")) {
-                    ForEach(0..<years.count) { index in
-                        Text(String(years[index])).tag(index)
-                    }
-                }
+                .pickerStyle(.menu)
             }
-            .pickerStyle(.menu)
         }
         .onAppear {
             dateFormatter.dateFormat = "MMMM"
             let components = Calendar.current.dateComponents([.month, .year], from: viewOption) // Using DateComponents to extract month and year from date
-            selectedMonth = components.month! - 1                                               // Setting them to initial values of month and year
-            selectedYear = components.year! - years[0]
+            guard let month = components.month else {return}
+            guard let year = components.year else {return}
+            selectedMonth = month - 1                       // Setting them to initial values of month and year
+            selectedYear = year - years[0]
         }
         .onChange(of: selectedMonth) { month in
             updateSelectedDate()
@@ -139,16 +149,20 @@ struct MonthYearPicker: View {
         .onChange(of: selectedYear) { year in
             updateSelectedDate()
         }
+
     }
     
     func updateSelectedDate() {
         let newDateComponents = DateComponents(year: years[selectedYear], month: selectedMonth + 1)
-        viewOption = Calendar.current.date(from: newDateComponents)!
+        guard let newDate = Calendar.current.date(from: newDateComponents) else {return}
+        viewOption = newDate
     }
 }
 
 struct HabitSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        HabitSummaryView()
+        let trackerVM = HabitTrackerViewModel()
+        let notifm = NotificationManager()
+        HabitSummaryView().environmentObject(trackerVM).environmentObject(notifm)
     }
 }

@@ -20,43 +20,49 @@ struct LoginView : View {
     var body: some View {
         
         NavigationView {
-            VStack {
-                Spacer()
-                Image(systemName: "arrow.clockwise")
-                    .resizable()
-                    .frame(width: 200, height: 200)
-                Spacer()
-                TextField("Email", text: $loginVM.email)
-                    .padding(.horizontal, 50)
-                Spacer().frame(height: 40)
-                TextField("Password", text: $loginVM.password)
-                    .padding(.horizontal, 50)
-                Spacer()
-                Button(action: {
-                    print("log in")
-                    loginVM.signInWithEmailAndPassword()
-                    loginVM.onSignInSuccess = {
-                        signedIn = true
-                    }
-                }) {
-                    Text("Log in")
+            ZStack {
+                HStack {
+                    Color.softOrange
+                    Color.teal
                 }
-                .buttonStyle(.borderedProminent)
-                .padding(10)
-                Button(action: {
-                    print("new user")
-                    if signedIn == false {
-                        isPresentingSheet = true
-                    } else {
-                        print("User is already signed in")
+                VStack {
+                    Spacer()
+                    Image(systemName: "arrow.clockwise")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                    Spacer()
+                    TextField("Email", text: $loginVM.email)
+                        .padding(.horizontal, 50)
+                    Spacer().frame(height: 40)
+                    TextField("Password", text: $loginVM.password)
+                        .padding(.horizontal, 50)
+                    Spacer()
+                    Button(action: {
+                        print("log in")
+                        loginVM.signInWithEmailAndPassword()
+                        loginVM.onSignInSuccess = {
+                            signedIn = true
+                        }
+                    }) {
+                        Text("Log in")
                     }
-                }) {
-                    Text("Create Account")
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(10)
-                .sheet(isPresented: $isPresentingSheet) {
-                    CreateUserView(loginVM: loginVM)
+                    .buttonStyle(MaroonButtonStyle())
+                    .padding(10)
+                    Button(action: {
+                        print("new user")
+                        if signedIn == false {
+                            isPresentingSheet = true
+                        } else {
+                            print("User is already signed in")
+                        }
+                    }) {
+                        Text("Create Account")
+                    }
+                    .buttonStyle(MaroonButtonStyle())
+                    .padding(10)
+                    .sheet(isPresented: $isPresentingSheet) {
+                        CreateUserView(loginVM: loginVM)
+                    }
                 }
             }
             .padding()

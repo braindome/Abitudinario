@@ -72,9 +72,7 @@ class HabitTrackerViewModel : ObservableObject {
         guard let user = auth.currentUser else {return}
         let habitsRef = db.collection("Users").document(user.uid).collection("Habits")
         let isHabitCompleted = isHabitCompletedOnDate(habit: habit, date: latestDone)
-        
-        
-        
+             
         var updatedCompletedDates = habit.completedDates
         if isHabitCompleted {
             updatedCompletedDates.removeAll { Calendar.current.isDate($0, inSameDayAs: latestDone) }
@@ -180,7 +178,6 @@ class HabitTrackerViewModel : ObservableObject {
         if let lastDate = sortedDates.last, Calendar.current.isDateInToday(lastDate) {
             currentStreak += 1
         }
-
 
         return currentStreak
     }
