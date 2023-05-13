@@ -63,8 +63,7 @@ struct ContentView: View {
         ZStack {
             NavigationView {
                 ZStack {
-                    VStack {
-                        ZStack {
+                    VStack(spacing: 0) {
                             HStack {
                                 Button(action: {
                                     selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
@@ -90,8 +89,6 @@ struct ContentView: View {
                                         .foregroundColor(.black)
                                 }
                             }
-                        }
-                        ZStack {
                             List {
                                 ForEach(trackerVM.habits) { habit in
                                     HabitTrackerRowView(selectedDate: $selectedDate, habit: habit, vm: trackerVM)
@@ -102,7 +99,8 @@ struct ContentView: View {
                                     }
                                 }
                             }
-                        }
+                            .scrollContentBackground(.hidden)
+                            .cornerRadius(10)
                     }
                     .onAppear() {
                         selectedDate = selectedDate.withDefaultTimeZone()
@@ -128,15 +126,18 @@ struct ContentView: View {
                     .navigationBarItems(
                         leading: NavigationLink(destination: HabitSummaryView()) {
                         Image(systemName: "info.square")
-                                .foregroundColor(.black)
+                                .foregroundColor(Color.darkGreen)
                     },
                         trailing: NavigationLink(destination: NewActivityView(selectedDate: $selectedDate)) {
                         Image(systemName: "plus")
-                                .foregroundColor(.black)
+                                .foregroundColor(Color.darkGreen)
                     })
                 }
+                .background(Color.lightCeleste.opacity(0.2))
+
             }
         }
+        .accentColor(Color.lightBrown)
     }
 }
 
@@ -157,16 +158,15 @@ struct HabitTrackerRowView: View {
     var body: some View {
 
         ZStack {
-
             HStack {
                 Button(action: {
                     isPresentingSheet = true
                 }) {
                     Text("")
                 }
-                .sheet(isPresented: $isPresentingSheet) {
-                    HabitStatsView(habit: habit)
-                }
+                //.sheet(isPresented: $isPresentingSheet) {
+                //    HabitStatsView(habit: habit)
+                //}
                 Text(habit.name).disabled(true)
                 Spacer()
                 Button(action: {
@@ -197,7 +197,8 @@ struct HabitTrackerRowView: View {
                 }
             }
         }
-        
+        .cornerRadius(10)
+        .padding(.horizontal, 10)
     }
 }
 

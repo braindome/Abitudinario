@@ -14,4 +14,10 @@ extension Color {
     static let maroon = Color("Maroon")
     static let mediumRed = Color("Medium Red")
     static let softOrange = Color("Soft Orange")
+    
+    static let darkPurple = Color("Dark Purple")
+    static let darkGreen = Color("Dark Green")
+    static let lightPurple = Color("Light Purple")
+    static let lightCeleste = Color("Light Celeste")
+    static let lightBrown = Color("Light Brown")
 }

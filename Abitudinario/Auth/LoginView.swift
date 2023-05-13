@@ -21,10 +21,6 @@ struct LoginView : View {
         
         NavigationView {
             ZStack {
-                HStack {
-                    Color.softOrange
-                    Color.teal
-                }
                 VStack {
                     Spacer()
                     Image(systemName: "arrow.clockwise")
@@ -66,7 +62,10 @@ struct LoginView : View {
                 }
             }
             .padding()
+            .background(Color.lightCeleste.opacity(0.2))
+
         }
+        .background(Color.softOrange)
         .fullScreenCover(isPresented: $signedIn, content: {
             ContentView()
         })
